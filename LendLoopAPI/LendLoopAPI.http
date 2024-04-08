@@ -1,0 +1,6 @@
+@LendLoopAPI_HostAddress = http://localhost:5221
+
+GET {{LendLoopAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
