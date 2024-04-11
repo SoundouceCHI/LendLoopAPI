@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using LendLoopAPI.Models;
 
 namespace LendLoopAPI.Models
 {
@@ -11,12 +12,13 @@ namespace LendLoopAPI.Models
         public DbSet<Loan> Loans { get; set; }
         public DbSet<Item> Items { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Subcategory>Subcategories { get; set; }
 
         public LendLoopContext(DbContextOptions options) : base(options)
         {
 
         }
-
+        
     }
 
 }

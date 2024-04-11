@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LendLoopAPI.Models
 {
-    [Table("User")]
+    [Table("Users")]
     public class UserApp
     {
         [Key]
@@ -12,6 +12,6 @@ namespace LendLoopAPI.Models
         public string Email { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;    
         public string Adress { get; set; } = string.Empty;
-        public string ProfilePicUrl { get; set; } = string.Empty;
+        public string? ProfilePicUrl { get; set; } 
     }
 }

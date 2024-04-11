@@ -9,7 +9,7 @@ namespace LendLoopAPI.Models
         public int ItemId { get; set; }
         public int LenderId { get; set; }
         public int BorrowerId { get; set; }
-        public int StatusId { get; set; }
+        public bool status { get; set; }
 
     }
 }
