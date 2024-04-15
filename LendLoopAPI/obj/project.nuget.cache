@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Wrug9fMcW/zuyDsB5eSHj8OvnfYz4tJwVKe+jwUSTql3J69wWFnkuCWrYDG7ZUpcZNanqUfU84rlypE84VI4VA==",
+  "dgSpecHash": "I4K4kq30wY6kBryVc9Bj6cnGrhI8UH29uGD/JVkGFaroyVK3AyVxagNgiU9eNlAWc8tpsEn36J3ksXtLgJ0xxA==",
   "success": true,
   "projectFilePath": "C:\\Users\\DevInfo\\LendLoop\\LendLoopAPI\\LendLoopAPI\\LendLoopAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DevInfo\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
+    "C:\\Users\\DevInfo\\.nuget\\packages\\dotenv.net\\3.1.3\\dotenv.net.3.1.3.nupkg.sha512",
     "C:\\Users\\DevInfo\\.nuget\\packages\\google.protobuf\\3.25.1\\google.protobuf.3.25.1.nupkg.sha512",
     "C:\\Users\\DevInfo\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\DevInfo\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

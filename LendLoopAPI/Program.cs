@@ -1,10 +1,14 @@
+using dotenv.net;
 using LendLoopAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System.Configuration;
+using dotenv.net;
 
 
 var builder = WebApplication.CreateBuilder(args);
+DotEnv.Load(options: new DotEnvOptions(envFilePaths: new[] { "../.env.local" }, ignoreExceptions: false));
+var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
 // Add services to the container.
 
@@ -13,7 +17,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<LendLoopContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))); 
 

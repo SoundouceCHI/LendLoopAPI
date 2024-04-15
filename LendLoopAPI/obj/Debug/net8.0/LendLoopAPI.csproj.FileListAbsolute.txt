@@ -257,3 +257,4 @@ C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\obj\Debug\net8.0\refint\LendLo
 C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\obj\Debug\net8.0\LendLoopAPI.pdb
 C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\obj\Debug\net8.0\LendLoopAPI.genruntimeconfig.cache
 C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\obj\Debug\net8.0\ref\LendLoopAPI.dll
+C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\dotenv.net.dll

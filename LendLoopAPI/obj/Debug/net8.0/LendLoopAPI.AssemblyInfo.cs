@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LendLoopAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9db74953c79b331730174dafd4fc33b1abdd9be5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3137e24dc57a3115b7e18b28a02fab3f56fac295")]
 [assembly: System.Reflection.AssemblyProductAttribute("LendLoopAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LendLoopAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
