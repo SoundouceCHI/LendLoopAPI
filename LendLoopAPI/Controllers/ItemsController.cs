@@ -57,8 +57,25 @@ namespace LendLoopAPI.Controllers
             return Ok(items);
         }
 
-            // PUT: api/Items/5
-            [HttpPut("{id}")]
+        [HttpGet("searchByCategory/{idCategory}")]
+        public async Task<ActionResult<List<Item>>> GetItemByCategory(int idCategory)
+        {
+            var subcategories =await _context.Subcategories.Where(x => x.CategoryId == idCategory).Select(x=>x.SubcategoryId).ToListAsync();
+            if(!subcategories.Any())
+            {
+                return NotFound();  
+            }
+            var items = await _context.Items.Where(x => subcategories.Contains(x.SubcategoryId)).ToListAsync();
+            if (!items.Any() )
+            {
+                return NotFound();
+            }
+
+            return Ok(items);
+
+        }
+        // PUT: api/Items/5
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutItem(int id, Item item)
         {
             if (id != item.ItemId)
