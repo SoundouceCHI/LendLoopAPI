@@ -40,9 +40,25 @@ namespace LendLoopAPI.Controllers
 
             return item;
         }
+        [HttpGet("searchItem/{name}")]
+        public async Task<ActionResult<List<Item>>> GetItemByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return NotFound();
+            }
+            var items = await _context.Items.Where(w => w.Title.Contains(name.ToLower())).ToListAsync();
+     
+            if (items.Count == 0)
+            {
+                return NotFound();
+            }
 
-        // PUT: api/Items/5
-        [HttpPut("{id}")]
+            return Ok(items);
+        }
+
+            // PUT: api/Items/5
+            [HttpPut("{id}")]
         public async Task<IActionResult> PutItem(int id, Item item)
         {
             if (id != item.ItemId)
