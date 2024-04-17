@@ -6,6 +6,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LendLoopAPI.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using Org.BouncyCastle.Crypto.Generators;
+using BCrypt.Net;
+using LendLoopAPI.Services;
+using LendLoopAPI.ModelDto;
+using Org.BouncyCastle.Asn1.Ocsp;
+using Microsoft.Extensions.Options;
 
 namespace LendLoopAPI.Controllers
 {
@@ -14,10 +25,48 @@ namespace LendLoopAPI.Controllers
     public class UserAppsController : ControllerBase
     {
         private readonly LendLoopContext _context;
+        private readonly string _jwtKey; 
 
-        public UserAppsController(LendLoopContext context)
+        public UserAppsController(LendLoopContext context, IOptions<JwtSettings> jwtSettings)
         {
             _context = context;
+            _jwtKey = jwtSettings.Value.Key;
+        }
+
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] UserAppLogin user)
+        {
+            var userDB = _context.Users.FirstOrDefault(x=> x.Email == user.Email);
+            if (PasswordService.CheckAuth(user, userDB)) 
+            {
+                var token = GenerateJwtToken(userDB.UserName);
+                return Ok(new { Token = token });
+            }
+            return Unauthorized();
+        }
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] UserAppRegistration user)
+        {
+            var userDB = _context.Users.FirstOrDefault(x => x.Email == user.Email || x.UserName == user.UserName);
+            if (userDB!=null) 
+            {
+                throw new ArgumentException($"User with email {user.Email} or username {user.UserName} already exists.");
+            }
+            string pwd = PasswordService.HashPassword(user.Password); 
+            var userApp = new UserApp
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                PasswordHash = pwd,
+                Adress = user.Adress,
+                ProfilePicUrl = null
+            }; 
+
+            _context.Users.Add(userApp);
+            _context.SaveChangesAsync(); 
+
+            var token = GenerateJwtToken(user.UserName);
+            return Ok(new { Token = token , Message = "Registration successful and logged in." });
         }
 
         // GET: api/UserApps
@@ -101,5 +150,19 @@ namespace LendLoopAPI.Controllers
         {
             return _context.Users.Any(e => e.UserId == id);
         }
+
+        private string GenerateJwtToken(string username)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtKey));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                claims: new[] { new Claim(ClaimTypes.Name, username) },
+                expires: DateTime.Now.AddHours(3),
+                signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+        
     }
 }

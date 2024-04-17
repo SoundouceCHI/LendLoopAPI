@@ -258,3 +258,12 @@ C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\obj\Debug\net8.0\LendLoopAPI.p
 C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\obj\Debug\net8.0\LendLoopAPI.genruntimeconfig.cache
 C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\obj\Debug\net8.0\ref\LendLoopAPI.dll
 C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\dotenv.net.dll
+C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\DevInfo\LendLoop\LendLoopAPI\LendLoopAPI\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
