@@ -52,6 +52,9 @@ namespace LendLoopAPI.Controllers
             {
                 throw new ArgumentException($"User with email {user.Email} or username {user.UserName} already exists.");
             }
+            if (!PasswordService.IsValidEmail(user.Email)){
+                throw new ArgumentException("Email invalid"); 
+            }
             string pwd = PasswordService.HashPassword(user.Password); 
             var userApp = new UserApp
             {
