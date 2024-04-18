@@ -1,15 +1,12 @@
-﻿
-namespace LendLoopAPI.Models
+﻿namespace LendLoopAPI.ModelDto
 {
-    public class Loan
+    public class LoanDto
     {
-        public int LoanId { get; set; }
         public DateOnly StartDate { get; set; }
         public int Duration { get; set; }
         public int ItemId { get; set; }
         public int LenderId { get; set; }
         public int BorrowerId { get; set; }
         public string LoanStatus { get; set; } = "asking"; 
-
     }
 }

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LendLoopAPI.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
+using LendLoopAPI.ModelDto;
 
 namespace LendLoopAPI.Controllers
 {
@@ -97,9 +99,104 @@ namespace LendLoopAPI.Controllers
             return NoContent();
         }
 
+        [HttpPost("loanRequest")]
+        public async Task<ActionResult> LoanRequest(LoanDto loan)
+        {
+            var itemAvailability = _context.Loans.Any(x=>x.ItemId == loan.ItemId && x.LoanStatus == "rented");
+            if(itemAvailability)
+            {
+                throw new ArgumentException($"Item {loan.ItemId} already rented.");
+            }
+            var newLoan = new Loan()
+            {
+                StartDate= loan.StartDate, 
+                Duration = loan.Duration,
+                ItemId = loan.ItemId, 
+                LenderId = loan.LenderId, 
+                BorrowerId = loan.BorrowerId, 
+                LoanStatus = loan.LoanStatus
+            }; 
+            _context.Loans.Add(newLoan);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("LoanRequest", new {id= newLoan.LoanId}, newLoan); 
+        }
+        [HttpPut("{id}/accept")]
+        public async Task<ActionResult> AcceptLoan(int id)
+        {
+            var loan = _context.Loans.FirstOrDefault(x=>x.LoanId== id);
+            if(loan == null)
+            {
+                return BadRequest(); 
+            }
+            loan.LoanStatus = "rented"; 
+            _context.Entry(loan).Property(x=>x.LoanStatus).IsModified = true;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!LoanExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent(); 
+        }
+        [HttpPut("{id}/loanFinished")]
+        public async Task<ActionResult> LoanFinished(int id)
+        {
+            var loan = _context.Loans.FirstOrDefault(x=> x.LoanId == id);
+            if(loan  == null) 
+            {
+                return BadRequest();
+            }
+
+            if(loan.LoanStatus != "rented")
+            {
+                throw new Exception("Item is not rented"); 
+            }
+
+            loan.LoanStatus = "over"; 
+            _context.Entry(loan).Property(x=>x.LoanStatus).IsModified=true;
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!LoanExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+
+            }
+            return NoContent() ;
+        }
+
         private bool LoanExists(int id)
         {
             return _context.Loans.Any(e => e.LoanId == id);
+        }
+        private string LoanStatus(int id)
+        {
+            var loan = _context.Loans.FirstOrDefault(x => x.LoanId == id); 
+            if(loan == null)
+            {
+                throw new Exception("Loan not exist"); 
+            }
+            return loan.LoanStatus;  
         }
     }
 }
