@@ -74,6 +74,22 @@ namespace LendLoopAPI.Controllers
             return Ok(items);
 
         }
+
+        [HttpGet("searchByKeyWord/{keyWord}")]
+        public async Task<ActionResult<List<Item>>> GetItemByKeyWord(string keyWord)
+        {
+            if(keyWord == null)
+            {
+                return NotFound();
+            }
+            var items = await _context.Items.Where(x=> x.Description.Contains(keyWord) || x.Title.Contains(keyWord)).ToListAsync();
+            if (!items.Any())
+            {
+                return NotFound(); 
+            }
+            return Ok(items);
+
+        }
         // PUT: api/Items/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutItem(int id, Item item)
