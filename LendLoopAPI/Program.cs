@@ -44,6 +44,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<LendLoopContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))); 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyCorsPolicy",
+        builder => builder.WithOrigins("http://localhost:4200")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
@@ -55,7 +62,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("MyCorsPolicy"); 
 app.UseAuthorization();
 
 app.MapControllers();
