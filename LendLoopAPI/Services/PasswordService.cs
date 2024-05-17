@@ -18,7 +18,7 @@ namespace LendLoopAPI.Services
             {
                 return false;
             }
-            return BCrypt.Net.BCrypt.Verify(user.PasswordHash, userDB.PasswordHash);
+            return BCrypt.Net.BCrypt.Verify(user.Password, userDB.PasswordHash);
 
         }
         public static bool IsValidEmail(string email)
