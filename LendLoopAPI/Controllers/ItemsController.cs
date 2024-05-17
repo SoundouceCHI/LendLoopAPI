@@ -56,7 +56,17 @@ namespace LendLoopAPI.Controllers
 
             return Ok(items);
         }
+        [HttpGet("searchItemByUserId/{userId}")]
+        public async Task<ActionResult<List<Item>>> GetItemByByUserId(int userId)
+        {
+            var items = await _context.Items.Where(item => item.UserId == userId).ToListAsync();
+            if (items.Count == 0)
+            {
+                return NotFound();
+            }
 
+            return Ok(items);
+        }
         [HttpGet("searchByCategory/{idCategory}")]
         public async Task<ActionResult<List<Item>>> GetItemByCategory(int idCategory)
         {

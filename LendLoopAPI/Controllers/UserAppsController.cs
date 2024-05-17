@@ -39,7 +39,7 @@ namespace LendLoopAPI.Controllers
             var userDB = _context.Users.FirstOrDefault(x=> x.Email == user.Email);
             if (PasswordService.CheckAuth(user, userDB)) 
             {
-                var token = GenerateJwtToken(userDB.UserName);
+                var token = GenerateJwtToken(userDB.UserId, userDB.UserName);
                 return Ok(new { Token = token });
             }
             return Unauthorized();
@@ -68,7 +68,7 @@ namespace LendLoopAPI.Controllers
             _context.Users.Add(userApp);
             _context.SaveChangesAsync(); 
 
-            var token = GenerateJwtToken(user.UserName);
+            var token = GenerateJwtToken(userApp.UserId, user.UserName);
             return Ok(new { Token = token , Message = "Registration successful and logged in." });
         }
 
@@ -154,18 +154,25 @@ namespace LendLoopAPI.Controllers
             return _context.Users.Any(e => e.UserId == id);
         }
 
-        private string GenerateJwtToken(string username)
+        private string GenerateJwtToken(int userId, string username)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, userId.ToString()),  
+                new Claim(ClaimTypes.Name, username)           
+            };
+
             var token = new JwtSecurityToken(
-                claims: new[] { new Claim(ClaimTypes.Name, username) },
+                claims: claims,
                 expires: DateTime.Now.AddHours(3),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
-        
+
+
     }
 }
